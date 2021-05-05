@@ -1,10 +1,10 @@
 import { Account } from "./account.model";
 
 export interface Owner{
-    id: string;
-    name: string;
-    dateOfBirth: string;
-    address: string;
+    Id: string;
+    Name: string;
+    DateOfBirth: string;
+    Address: string;
 
-    accounts?:Account[];
+    Accounts?:Account[];
 }

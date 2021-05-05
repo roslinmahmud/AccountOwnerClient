@@ -38,7 +38,7 @@ export class OwnerUpdateComponent implements OnInit {
     .subscribe(res=>{
       this.owner = res as Owner;
       this.ownerForm.patchValue(this.owner);
-      $('#dateOfBirth').val(this.datePipe.transform(this.owner.dateOfBirth, 'MM/dd/yyyy'));
+      $('#dateOfBirth').val(this.datePipe.transform(this.owner.DateOfBirth, 'MM/dd/yyyy'));
     },
     (error)=>{
       this.errorHandler.handleError(error);
@@ -76,11 +76,11 @@ export class OwnerUpdateComponent implements OnInit {
   
   private executeOwnerUpdate = (ownerFormValue) => {
     const date = new Date(ownerFormValue.dateOfBirth);
-    this.owner.name = ownerFormValue.name;
-    this.owner.dateOfBirth = this.datePipe.transform(date, "yyyy-MM-dd");
-    this.owner.address = ownerFormValue.address;
+    this.owner.Name = ownerFormValue.name;
+    this.owner.DateOfBirth = this.datePipe.transform(date, "yyyy-MM-dd");
+    this.owner.Address = ownerFormValue.address;
   
-    let apiUrl = `api/owner/${this.owner.id}`;
+    let apiUrl = `api/owner/${this.owner.Id}`;
     this.repository.update(apiUrl, this.owner)
       .subscribe(res => {
         $('#successModal').modal();

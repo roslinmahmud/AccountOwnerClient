@@ -4,7 +4,7 @@
         <strong>Owner name:</strong>
       </div>
       <div class="col-md-3">
-        {{owner?.name}}
+        {{owner?.Name}}
       </div>
     </div>
     <div class="row">
@@ -12,10 +12,10 @@
         <strong>Date of birth:</strong>
       </div>
       <div class="col-md-3">
-        {{owner?.dateOfBirth | date: 'dd/MM/yyyy'}}
+        {{owner?.DateOfBirth | date: 'dd/MM/yyyy'}}
       </div>
     </div>
-    <div class="row" *ngIf='owner?.accounts.length <= 2; else advancedUser'>
+    <div class="row" *ngIf='owner?.Accounts.length <= 2; else advancedUser'>
       <div class="col-md-3">
         <strong>Type of user:</strong>
       </div>
@@ -46,7 +46,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let account of owner?.accounts">
+            <tr *ngFor="let account of owner?.Accounts">
               <td>{{account?.accountType}}</td>
               <td>{{account?.dateCreated | date: 'dd/MM/yyyy'}}</td>
             </tr>
