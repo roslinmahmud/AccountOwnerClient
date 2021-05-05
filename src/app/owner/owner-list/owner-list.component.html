@@ -1,0 +1,45 @@
+<div class="row"> 
+    <div class="offset-10 col-md-2">
+      <a [routerLink]="['/owner/create']">Create owner</a>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Owner name</th>
+              <th>Owner address</th>
+              <th>Date of birth</th>
+              <th>Details</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let owner of owners$ | async">
+              <td>{{owner.Name}}</td>
+              <td>{{owner.Address}}</td>
+              <td>{{owner.DateOfBirth | date: 'dd/MM/yyyy'}}</td>
+              <td><button type="button" id="details" class="btn btn-light" (click)="getOwnerDetails(owner.Id)">Details</button></td>
+              <td><button type="button" id="update" class="btn btn-success" (click)="redirectToOwnerUpdate(owner.Id)">Update</button></td>
+              <td><button type="button" id="delete" class="btn btn-danger" (click)="deleteOwner(owner.Id)">Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+<app-success-modal [modalHeaderText]="'Success message'" 
+    [modalBodyText]="'Action completed successfully'" 
+    [okButtonText]="'OK'"
+    (redirectOnOK)="reloadOwnerList()">
+</app-success-modal>
+
+<app-error-modal [modalHeaderText]="'Error message'" 
+    [modalBodyText]="errorMessage" 
+    [okButtonText]="'OK'">
+</app-error-modal>
