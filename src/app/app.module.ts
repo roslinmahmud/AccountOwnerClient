@@ -13,6 +13,9 @@ import { StoreModule } from '@ngrx/store';
 import { ownerReducer } from './state/owners.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { OwnerEffects } from './state/effects/owner.effects';
+import { OwnerRemoveEffects } from './state/effects/owner.remove.effects';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ import { environment } from '../environments/environment';
     StoreModule.forRoot({
       owners: ownerReducer
     }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([OwnerEffects, OwnerRemoveEffects])
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { ErrorHandlerService } from 'src/app/shared/services/error-handler.service';
 import { RepositoryService } from 'src/app/shared/services/repository.service';
 import { AppState } from 'src/app/state/app.state';
-import { removeOwner, retrieveOwnerList } from 'src/app/state/owners.actions';
+import { removeOwner, RetrieveOwnerList, retrieveOwnerList } from 'src/app/state/owners.actions';
 import { Owner } from 'src/app/_interfaces/owner.model'
 
 @Component({
@@ -14,7 +14,7 @@ import { Owner } from 'src/app/_interfaces/owner.model'
   styleUrls: ['./owner-list.component.css']
 })
 export class OwnerListComponent implements OnInit {
-  //public owners: Owner[] = new Array();
+  
   owners$ = this.store.select('owners');
   errorMessage: string = '';
 
@@ -24,21 +24,7 @@ export class OwnerListComponent implements OnInit {
      private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.getAllOwners();
-  }
-
-  public getAllOwners = () => {
-    let apiAddress = "api/owner";
-
-    this.repository.get(apiAddress)
-    .subscribe((res)=>{
-      //this.owners = Owner as Owner[];
-      this.store.dispatch(retrieveOwnerList({Owner: res as Owner[]}));
-    },
-    (error) =>{
-      this.errorHandler.handleError(error);
-      this.errorMessage = this.errorHandler.errorMessage;
-    })
+    this.store.dispatch({type: RetrieveOwnerList});
   }
 
   public getOwnerDetails = (Id) => {
@@ -46,7 +32,32 @@ export class OwnerListComponent implements OnInit {
   }
 
   public deleteOwner = (Id) => {
-    this.repository.delete("api/owner/"+Id)
+    this.store.dispatch(removeOwner({ownerId: Id as string}));
+    $('#successModal').modal();
+  }
+
+  public redirectToOwnerUpdate = (Id) => {
+    this.router.navigate(["/owner/update/"+Id]);
+  }
+
+}
+
+
+  /* public getAllOwners = () => {
+    let apiAddress = "api/owner";
+
+    this.repository.get(apiAddress)
+    .subscribe((res)=>{
+      this.store.dispatch(retrieveOwnerList({Owner: res as Owner[]}));
+    },
+    (error) =>{
+      this.errorHandler.handleError(error);
+      this.errorMessage = this.errorHandler.errorMessage;
+    })
+  } */
+
+
+    /* this.repository.delete("api/owner/"+Id)
     .subscribe( res=> {
       $('#successModal').modal();
       this.store.dispatch(removeOwner({ownerId: Id as string}));
@@ -54,15 +65,4 @@ export class OwnerListComponent implements OnInit {
     (error) => {
       this.errorHandler.handleError(error);
       this.errorMessage = this.errorHandler.errorMessage;
-    })
-    
-  }
-
-  public redirectToOwnerUpdate = (Id) => {
-    this.router.navigate(["/owner/update/"+Id]);
-  }
-
-  public reloadOwnerList = () => {
-    //window.location.reload();
-  }
-}
+    }) */
